@@ -4,7 +4,7 @@ require_once 'MarkDown.php';
 // templates transposés de 
 // James Payne, Beginning Python, Wiley, 2010, p 435-436
 
-function mainTPL($title,$body,$navlinks, $usermenu){
+function mainTPL($title,$body,$navlinks){
     $usermenu = viewMenuTPL();
     return <<<HTML
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -44,6 +44,28 @@ function editTPL($banner,$pageURL,$text){
 WRITE;
 }
 
+function loginTPL($banner) {
+    return <<<WRITE
+    $banner
+    <form method="POST" action="">
+        <input type="text" name="name" placeholder="user" />
+        <input type="password" name="password" placeholder="password" />
+        <input type="submit" value="Login"></input>
+    </form>
+WRITE;
+}
+
+function signupTPL($banner) {
+    return <<<WRITE
+    $banner
+    <form method="POST" action="">
+        <input type="text" name="name" placeholder="user" />
+        <input type="password" name="password" placeholder="password" />
+        <input type="submit" value="Login"></input>
+    </form>
+WRITE;
+}
+
 function errorTPL($error){
     return <<<HTML
     <h1>Erreur: $error</h1>
@@ -69,17 +91,21 @@ function viewLinkTPL($file,$name){
 
 function viewMenuTPL() {
     $user = logged_in();
-    if(!$user)
-        return "";
+    if(!$user) {
+        $links = array(
+            '<em><a href="PtiWiki.php?op=signup">Signup</a></em>',
+            '<em><a href="PtiWiki.php?op=login">Login</a></em>',
+        );
+    } else {
+        $links = array(
+            '<strong>' . $user['name'] . '</strong>',
+            '<a href="PtiWiki.php?op=logout">Logout</a>'
+        );
+        
+        if($user['rank'] == 'admin')
+            $links[] = '<a href="PtiWiki.php?op=admin">Administration</a>';
+    }
     
-    $links = array(
-        '<strong>' . $user['name'] . '</strong>',
-        '<a href="PtiWiki.php?op=logout">Logout</a>'
-    );
-    
-    if($user['rank'] == 'admin')
-        $links[] = '<a href="PtiWiki.php?op=admin">Administration</a>';
-
     return '<div class="user-menu">' . implode(' | ', $links) . '</div>';
 }
 

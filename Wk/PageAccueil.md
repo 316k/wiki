@@ -7,7 +7,7 @@ On prête cette définition à RaymondQueneau:
 ![Non.](https://secure.php.net/images/logo.php)
 
 CeciNestPasUnePipe
-
+adasd
 L'OuLiPo se définit d'abord par ce qu'il n'est pas :
 - Ce n'est pas un mouvement littéraire.
 - Ce n'est pas un séminaire scientifique.

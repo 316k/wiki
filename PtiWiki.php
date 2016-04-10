@@ -8,6 +8,7 @@
  */
 
 session_start();
+ob_start();
 
 require_once 'Db.php';
 require_once 'User.php';
@@ -16,7 +17,7 @@ require_once 'Templates.php';
 
 //  analyser les paramètres d'entrée
 $method = $_SERVER['REQUEST_METHOD'];
-if($method=='POST') {
+if($method=='POST' && isset($_POST['op']) && isset($_POST['file'])) {
     $op = $_POST["op"];
     $file = $_POST["file"];
 } else {
@@ -37,7 +38,6 @@ if($page->exists())
 else if(!in_array($op, array('create', 'save')))
     $op = 'not_found';
 
-
 $navlinks = array(viewLinkTPL("PageAccueil","Accueil"),
                   editLinkTPL($file,"Éditer"));
 
@@ -46,7 +46,10 @@ if($file!="PageAccueil")
 
 $navlinks = implode(' | ', $navlinks);
 
-var_dump(list_users());
+if(!logged_in() && in_array($op, array('create', 'update', 'delete', 'confirm-delete', 'save'))) {
+    $op = 'unauthorized';
+}
+
 
 switch ($op) {
     case 'create':
@@ -85,17 +88,20 @@ switch ($op) {
                      $navlinks);
         break;
     case 'signup':
-        if(isset($_POST['name']) && isset($_POST['password']))
+        if(isset($_POST['name']) && isset($_POST['password'])) {
             $_SESSION['user_id'] = create_user($_POST['name'], $_POST['password']);
-        echo mainTPL("TODO", "TODO", "");
+            header('Location: PtiWiki.php?op=read&file=PageAccueil');
+        }
+        echo signupTPL("Signup");
         break;
     case 'login':
         if(isset($_POST['name']) && isset($_POST['password'])) {
             $user = user($_POST['name'], $_POST['password']);
             if($user)
                 $_SESSION['user_id'] = $user['id'];
+            header('Location: PtiWiki.php?op=read&file=PageAccueil');
         }
-        echo mainTPL("TODO", "TODO", "");
+        echo loginTPL(bannerTPL("Login"));
         break;
     case 'logout':
         session_unset();
@@ -106,6 +112,9 @@ switch ($op) {
         echo mainTPL("TODO", "TODO", "");
         // Voir le log & modifier des users
         break;
+    case 'unauthorized':
+        echo errorTPL("Vous devez d'abord vous connecter");
+    break;
     default:
         echo errorTPL("Page introuvable");
         break;
