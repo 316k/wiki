@@ -46,6 +46,8 @@ if($file!="PageAccueil")
 
 $navlinks = implode(' | ', $navlinks);
 
+var_dump(list_users());
+
 switch ($op) {
     case 'create':
         echo mainTPL($title,editTPL(bannerTPL("Création de $file"),
@@ -82,13 +84,17 @@ switch ($op) {
                                     markDown2HTML($newText)),
                      $navlinks);
         break;
-    case 'not_found':
-        echo errorTPL("Page introuvable");
-        break;
     case 'signup':
+        if(isset($_POST['name']) && isset($_POST['password']))
+            $_SESSION['user_id'] = create_user($_POST['name'], $_POST['password']);
         echo mainTPL("TODO", "TODO", "");
         break;
     case 'login':
+        if(isset($_POST['name']) && isset($_POST['password'])) {
+            $user = user($_POST['name'], $_POST['password']);
+            if($user)
+                $_SESSION['user_id'] = $user['id'];
+        }
         echo mainTPL("TODO", "TODO", "");
         break;
     case 'logout':
@@ -98,9 +104,10 @@ switch ($op) {
         break;
     case 'admin':
         echo mainTPL("TODO", "TODO", "");
+        // Voir le log & modifier des users
         break;
     default:
-        echo mainTPL("Erreur","Opération non implantée:".$op,"");
+        echo errorTPL("Page introuvable");
         break;
 }
 ?>

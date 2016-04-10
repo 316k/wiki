@@ -34,3 +34,11 @@ function create_user($name, $password) {
         return FALSE;
     }
 }
+
+function list_users() {
+    global $db;
+    
+    $query = $db->query('SELECT * FROM users');
+
+    return $query->fetchAll();
+}

@@ -6,6 +6,20 @@
 */
 class Page{
     private $wiki, $nom, $nomFichier, $texte;
+
+    public static function index($filter) {
+
+        $list = array();
+        
+        foreach(scandir('Wk') as $file) {
+            $name = preg_replace('/(.*)\.md/', '$1', $file);
+
+            if(!in_array($name, array('.', '..')) && ($filter == "" || stripos($name, $filter) !== FALSE))
+                $list[] = $name;
+        }
+        
+        return $list;
+    }
     
     function __construct($wiki,$nom){
         $this->wiki=$wiki;
