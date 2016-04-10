@@ -14,6 +14,7 @@ L'OuLiPo se définit d'abord par ce qu'il n'est pas :
 - Ce n'est pas de la littérature aléatoire.
 
 ## Quelques membres
+
 - GeorgesPerec
 - FrancoisLeLionnais
 - ClaudeBerge

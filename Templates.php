@@ -17,7 +17,7 @@ function mainTPL($title,$body,$navlinks){
     </head>
     <body>
         $body
-        <hr></hr>
+        <hr />
         $navlinks $usermenu
     </body>
 </html>
@@ -69,12 +69,12 @@ WRITE;
 function errorTPL($error){
     return <<<HTML
     <h1>Erreur: $error</h1>
-    <p>Vous pouvez toujours essayer de retourner à l'<a href="PtiWiki.php?op=read&file=PageAccueil">Accueil</a> ou de vous <a href="PtiWiki.php?op=login">logguer</a>.</p>
+    <p>Vous pouvez toujours essayer de retourner à l'<a href="PtiWiki.php?op=read&amp;file=PageAccueil">Accueil</a> ou de vous <a href="PtiWiki.php?op=login">logguer</a>.</p>
 HTML;
 }
 
 function bannerTPL($banner){
-    return "<p style='color:green'>$banner</p><hr></hr>";
+    return "<p style='color:green'>$banner</p><hr />";
 }
 
 function viewLinkTPL($file,$name){
@@ -86,7 +86,7 @@ function viewLinkTPL($file,$name){
         $op="create";
         $style=" style='color:red'";
     }
-    return "<a href='PtiWiki.php?op=$op&file=$file'$style>$name</a>";
+    return "<a href='PtiWiki.php?op=$op&amp;file=$file'$style>$name</a>";
 }
 
 function viewMenuTPL() {
@@ -110,11 +110,11 @@ function viewMenuTPL() {
 }
 
 function editLinkTPL($file,$name){
-    return "<a href='PtiWiki.php?op=update&file=$file'>$name</a>";
+    return "<a href='PtiWiki.php?op=update&amp;file=$file'>$name</a>";
 }
 
 function deleteLinkTPL($file,$name){
-    return "<a href='PtiWiki.php?op=delete&file=$file'>$name</a>";
+    return "<a href='PtiWiki.php?op=delete&amp;file=$file'>$name</a>";
 }
 
 function deleteTPL($pageURL){

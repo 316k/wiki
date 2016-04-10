@@ -44,7 +44,7 @@ $navlinks = array(viewLinkTPL("PageAccueil","Accueil"),
 if($file!="PageAccueil")
     $navlinks[] = deleteLinkTPL($file,"Détruire");
 
-$navlinks = implode(' | ', $navlinks);
+$navlinks = '<div>' . implode(' | ', $navlinks) . '</div>';
 
 if(!logged_in() && in_array($op, array('create', 'update', 'delete', 'confirm-delete', 'save'))) {
     $op = 'unauthorized';
@@ -113,10 +113,10 @@ switch ($op) {
         // Voir le log & modifier des users
         break;
     case 'unauthorized':
-        echo errorTPL("Vous devez d'abord vous connecter");
+        echo mainTPL("Erreur", errorTPL("Vous devez d'abord vous connecter"), "");
     break;
     default:
-        echo errorTPL("Page introuvable");
+        echo mainTPL("Erreur", errorTPL("Page introuvable"), "");
         break;
 }
 ?>
