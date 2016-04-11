@@ -27,7 +27,7 @@ class Page{
         $this->nomFichier=$wiki->getBase()."/".$nom;
     }
     
-    function exists(){
+    function exists() {
         return file_exists($this->nomFichier);
     }
     

@@ -18,7 +18,10 @@ function mainTPL($title,$body,$navlinks){
     <body>
         $body
         <hr />
-        $navlinks $usermenu
+        <div class="footer">
+            $navlinks $usermenu
+            <br style="clear: both" />
+        </div>
     </body>
 </html>
 HTML;
@@ -64,6 +67,76 @@ function signupTPL($banner) {
         <input type="submit" value="Login"></input>
     </form>
 WRITE;
+}
+
+function indexTPL($banner, $filter) {
+    $index = $banner . <<<INDEX
+    <h2>Index des pages</h2>
+    <form method="GET" action="">
+        <input type="hidden" name="op" value="index" />
+        <input type="text" name="filter" value="$filter" placeholder="ex.: OuLiPo" />
+        <input type="submit" value="filtrer" />
+    </form>
+    <ul>
+INDEX;
+    
+    foreach(Page::index($filter) as $page) {
+        $index .= '<li>' . viewLinkTPL($page, $page) . '</li>';
+    }
+    
+    return $index . "</ul>";
+}
+
+function adminTPL($banner, $users, $logs) {
+    $out = <<<HTML
+    
+    $banner
+    <h2>Utilisateurs</h2>
+    <table>
+        <thead>
+            <tr>
+                <td></td>
+                <th>Rang</th>
+                <th>Contribution</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+HTML;
+
+    foreach($users as $user) {
+        $out .= '<tr><th>' . $user['name'] . '</th>';
+        $out .= '<td>' . $user['rank'] . '</td>';
+        $out .= '<td style="text-align: right">' . user_contribution($user['id']) . '%</td>';
+        $out .= '<td><a href="">Bannir</a></td></tr>';
+    }
+
+    $out .= <<<HTML
+        </tbody>
+    </table>
+    <h2>Log</h2>
+    <table>
+        <thead>
+            <tr>
+                <td></td>
+                <th>Utilisateur</th>
+                <th>Action</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+HTML;
+
+    foreach($logs as $log) {
+        $out .= '<tr><th>' . viewLinkTPL($log['page'],$log['page']) . '</th>';
+        $out .= '<td>' . user($log['user_id'])['name'] . '</td>';
+        $out .= '<td>' . $log['action'] . '</td>';
+        $out .= '<td>' . $log['date'] . '</td></tr>';
+    }
+
+    $out .= '</tbody></table>';
+    
+    return $out;
 }
 
 function errorTPL($error){

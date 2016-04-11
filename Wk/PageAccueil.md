@@ -18,7 +18,8 @@ L'OuLiPo se définit d'abord par ce qu'il n'est pas :
 - GeorgesPerec
 - FrancoisLeLionnais
 - ClaudeBerge
-
+- JackBowers (ou pas)
 
 *Les textes de cet exemple sont tirées d'informations disponibles à partir de [l'article Oulipo de Wikipedia](http://fr.wikipedia.org/wiki/Oulipo)*
 
+*Non.*

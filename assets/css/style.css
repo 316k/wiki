@@ -1,3 +1,35 @@
+body {
+    margin-left: 45px;
+    margin-right: 45px;
+}
+
+h1, h2, h3, h4 {
+    font-family: "Sans Serif";
+}
+
+hr {
+    border: 1px solid #ccc;
+}
+
+img {
+    max-width: 300px;
+    width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.navlinks {
+    display: inline-block;
+    float: left;
+}
+
 .user-menu {
     display: inline-block;
     float: right;

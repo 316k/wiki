@@ -21,13 +21,10 @@ if($method=='POST' && isset($_POST['op']) && isset($_POST['file'])) {
     $op = $_POST["op"];
     $file = $_POST["file"];
 } else {
-	if(array_key_exists("op",$_GET)) $op = $_GET["op"];
-    else $op="view";
-	if(array_key_exists("file",$_GET))$file = $_GET["file"];
-	else $file="PageAccueil";
+	$op = isset($_GET['op']) ? $_GET["op"] : 'read';
+    $file = isset($_GET['file']) ? $_GET['file'] : 'PageAccueil';
 }
 
-	
 $wiki = new Wiki("Wk");
 $title = "PtiWiki - $file";
 
@@ -39,12 +36,16 @@ else if(!in_array($op, array('create', 'save')))
     $op = 'not_found';
 
 $navlinks = array(viewLinkTPL("PageAccueil","Accueil"),
-                  editLinkTPL($file,"Éditer"));
+                  '<a href="PtiWiki.php?op=index">Index des pages</a>',);
 
-if($file!="PageAccueil")
-    $navlinks[] = deleteLinkTPL($file,"Détruire");
+if(in_array($op, array('read', 'update', 'delete'))) {
+    $navlinks[] = editLinkTPL($file,"Éditer");
 
-$navlinks = '<div>' . implode(' | ', $navlinks) . '</div>';
+    if($file != 'PageAccueil')
+        $navlinks[] = deleteLinkTPL($file,"Détruire");
+}
+
+$navlinks = '<div class="navlinks">' . implode(' | ', $navlinks) . '</div>';
 
 if(!logged_in() && in_array($op, array('create', 'update', 'delete', 'confirm-delete', 'save'))) {
     $op = 'unauthorized';
@@ -72,9 +73,9 @@ switch ($op) {
         break;
     case 'confirm-delete':
         $page->delete();
-        echo mainTPL($title,viewTPL("PtiWiki - [Page $file détruite!]",
-                                     markDown2HTML($wiki->getPage("PageAccueil.md")->load()->getText())),
-                     $navlinks);
+        log_action('delete', $file);
+        
+        header('Location: PtiWiki.php?op=read&file=PageAccueil');
         break;
     case 'save':
         // truc adapté de http://www.tizag.com/phpT/php-magic-quotes.php
@@ -82,17 +83,19 @@ switch ($op) {
 			$newText = stripslashes($_POST['data']);
 		else
 			$newText = $_POST['data'];
+
+        log_action($page->exists() ? 'edit' : 'create', $file);
+        
         $page->setText($newText)->save();
-        echo mainTPL($title,viewTPL(bannerTPL($title),
-                                    markDown2HTML($newText)),
-                     $navlinks);
+
+        header('Location: PtiWiki.php?op=read&file='.$file);
         break;
     case 'signup':
         if(isset($_POST['name']) && isset($_POST['password'])) {
             $_SESSION['user_id'] = create_user($_POST['name'], $_POST['password']);
             header('Location: PtiWiki.php?op=read&file=PageAccueil');
         }
-        echo signupTPL("Signup");
+        echo mainTPL("Signup", signupTPL(bannerTPL("Signup")), $navlinks);;
         break;
     case 'login':
         if(isset($_POST['name']) && isset($_POST['password'])) {
@@ -101,22 +104,26 @@ switch ($op) {
                 $_SESSION['user_id'] = $user['id'];
             header('Location: PtiWiki.php?op=read&file=PageAccueil');
         }
-        echo loginTPL(bannerTPL("Login"));
+        echo mainTPL("Login", loginTPL(bannerTPL("Login")), $navlinks);;
         break;
     case 'logout':
         session_unset();
         header('Location: PtiWiki.php?op=read&file=PageAccueil');
         exit();
         break;
+    case 'index':
+        $filter = isset($_GET['filter']) ? $_GET['filter'] : '';
+        echo mainTPL("Index", indexTPL(bannerTPL("Index"), $filter), $navlinks);
+        break;
     case 'admin':
-        echo mainTPL("TODO", "TODO", "");
+        echo mainTPL("Admin", adminTPL(bannerTPL("Admin"), list_users(), list_actions()), $navlinks);
         // Voir le log & modifier des users
         break;
     case 'unauthorized':
-        echo mainTPL("Erreur", errorTPL("Vous devez d'abord vous connecter"), "");
+        echo mainTPL("Erreur", errorTPL("Vous devez d'abord vous connecter"), $navlinks);
     break;
     default:
-        echo mainTPL("Erreur", errorTPL("Page introuvable"), "");
+        echo mainTPL("Erreur", errorTPL("Page introuvable"), $navlinks);
         break;
 }
 ?>

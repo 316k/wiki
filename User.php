@@ -23,6 +23,14 @@ function user($id, $password = NULL) {
     return $query->fetch();
 }
 
+function user_contribution($id) {
+    global $db;
+   
+    $query = $db->prepare("SELECT (SELECT COUNT(id) FROM `logs` WHERE user_id = ?)/COUNT(id) AS contribution FROM logs");
+    $query->execute(array($id));
+    return number_format($query->fetch()['contribution'] * 100, 2);
+}
+
 function create_user($name, $password) {
     global $db;
     
@@ -42,3 +50,19 @@ function list_users() {
 
     return $query->fetchAll();
 }
+
+function log_action($action, $page) {
+    global $db;
+    
+    $query = $db->prepare('INSERT INTO logs(user_id, action, page, `date`) VALUES(?, ?, ?, NOW())');
+    $query->execute(array(logged_in()['id'], $action, $page));
+}
+
+function list_actions() {
+    global $db;
+    
+    $query = $db->query('SELECT * FROM logs ORDER BY `date` DESC');
+
+    return $query->fetchAll();
+}
+

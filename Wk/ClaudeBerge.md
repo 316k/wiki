@@ -1,4 +1,4 @@
-# *Claude Berge*
+# Claude Berge
 
 Claude Berge, né le 5 juin 1926 et mort le 30 juin 2002, était un mathématicien et artiste français. 
 
