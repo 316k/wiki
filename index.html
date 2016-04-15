@@ -12,7 +12,8 @@
 	<ul>
 	    <li><a href="MarkDown.php">Parseur de markdown</a></li>
 	    <li><a href="Page.php">Fichier de classe d'une page de wiki</a></li>
-	    <li><a href="MarkDown.php">Patrons de génération de pages</a></li>
+	    <li><a href="MarkDown.php">Parseur de markdown (modifié pour ne changer que les wikiwords)</a></li>
+	    <li><a href="Parsedown.php">Parseur de markdown libre téléchargé depuis github.</a> <a href="http://parsedown.org/">(site officiel)</a></li>
 	    <li><a href="User.php">Fichier de classe d'un utilisateur</a></li>
 	    <li><a href="Wiki.php">Fichier de classe d'un Wiki</a></li>
 	    <li><a href="config.php">Configurations</a></li>
@@ -21,7 +22,11 @@
     
     <p>Durant ce projet, nous avons pu en apprendre beaucoup sur la façon de gérer un site comprenant des usagers et des administrateurs. Nous avons aussi appris à utiliser php qui s'est révélé assez puissant à cause de ses nombreuses fonctions préintégrées mais qui nous a aussi nuit par moment à cause de sa gestion très laxiste des erreurs.
     </p>
+    <p>Durant l'élaboration du projet, nous nous sommes d'abord concentré sur l'ajout d'une base de donné permettant d'enregistrer des utilisateurs ayant des champs tels que noms d'utilisateurs, mots de passes et niveaux de permissions. Ainsi, seul un utilisateur a le droit de modifier une page de wiki. Le champ "rank" de notre table d'utilisateur nous permet d'implanter des utilisateurs administrateurs qui peuvent voir l'historique des modifications des pages par les usagers.</p>
     <p>
-    Nous n'avons pas beaucoup changé la disposition par défaut du code fourni mais nous avons ajouté la possibilité d'ajouter des images dans le markdown utilisé pour écrire des pages de wiki. Cette simplicité au niveau du style nous permet de rester compatible avec les appareils mobiles tels que les téléphones intelligents.
+    Cette simplicité au niveau du style nous permet de rester compatible avec les appareils mobiles tels que les téléphones intelligents.
+    </p>
+    <p>Nous avons pris la liberté de remplacer le parseur de markdown fourni par le parseur libre Parsedown en raison de la propension à compiler "########################AAAAA" en "&lth24&gtAAAAA&lt/h24&gt" et à générer du html invalide (comme par exemple en mettant des titres dans des balises p). Nous avons par contre gardés le support pour les WikiWords qui sont une partie importante des fonctionalités du wiki.</p>
+
 </body>
 </html>

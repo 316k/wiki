@@ -14,6 +14,7 @@ require_once 'Db.php';
 require_once 'User.php';
 require_once 'Wiki.php';
 require_once 'Templates.php';
+require_once 'Parsedown.php';
 
 //  analyser les paramètres d'entrée
 $method = $_SERVER['REQUEST_METHOD'];
@@ -51,6 +52,7 @@ if(!logged_in() && in_array($op, array('create', 'update', 'delete', 'confirm-de
     $op = 'unauthorized';
 }
 
+$parsedown = new Parsedown();
 
 switch ($op) {
     case 'create':
@@ -60,7 +62,8 @@ switch ($op) {
         break;
     case 'read':
         echo mainTPL($title,viewTPL(bannerTPL($title),
-                                    markDown2HTML($page->getText())),
+                                    //markDown2HTML($page->getText())),
+                                    markDown2HTML($parsedown->text($page->getText()))),
                     $navlinks);
         break;
     case 'update':
