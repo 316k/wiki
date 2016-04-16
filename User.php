@@ -31,6 +31,17 @@ function user_contribution($id) {
     return number_format($query->fetch()['contribution'] * 100, 2);
 }
 
+function set_rank($name, $rank) {
+    global $db;
+
+    try {
+        $query = $db->prepare('UPDATE users SET rank=? WHERE name=?');
+        $query->execute(array($rank, $name));
+    } catch(Exception $e) {
+        return $e;
+    }
+}
+
 function create_user($name, $password) {
     global $db;
     

@@ -39,17 +39,28 @@ else if(!in_array($op, array('create', 'save')))
 $navlinks = array(viewLinkTPL("PageAccueil","Accueil"),
                   '<a href="PtiWiki.php?op=index">Index des pages</a>',);
 
-if(in_array($op, array('read', 'update', 'delete'))) {
+if(in_array($op, array('read', 'update', 'delete', 'view_source'))) {
     $navlinks[] = editLinkTPL($file,"Éditer");
-
+    
     if($file != 'PageAccueil')
         $navlinks[] = deleteLinkTPL($file,"Détruire");
+    if($op == 'view_source') {
+        $navlinks[] = viewLinkTPL($file,"Retour à la page");
+    } else {
+        $navlinks[] = viewSourceLinkTPL($file, "Voir la source");
+    }
 }
 
 $navlinks = '<div class="navlinks">' . implode(' | ', $navlinks) . '</div>';
 
+$current_user = logged_in();
+
 if(!logged_in() && in_array($op, array('create', 'update', 'delete', 'confirm-delete', 'save'))) {
     $op = 'unauthorized';
+}
+
+if(logged_in() && $current_user["rank"] == "banned" && in_array($op, array('create', 'update', 'delete', 'confirm-delete', 'save'))) {
+    $op = 'banned';
 }
 
 $parsedown = new Parsedown();
@@ -66,8 +77,11 @@ switch ($op) {
                                     markDown2HTML($parsedown->text($page->getText()))),
                     $navlinks);
         break;
+    case 'view_source':
+        echo mainTPL($title, viewTPL(bannerTPL($title), $page->getText()), $navlinks);
+        break;
     case 'update':
-        echo mainTPL($title,editTPL(bannerTPL($title),
+        echo mainTPL($title, editTPL(bannerTPL($title),
                                     $file,$page->getText()),
                      $navlinks);
         break;
@@ -119,12 +133,19 @@ switch ($op) {
         echo mainTPL("Index", indexTPL(bannerTPL("Index"), $filter), $navlinks);
         break;
     case 'admin':
+        if(isset($_GET['rank'])) {
+            set_rank($_GET['user'], $_GET['rank']);
+            header('Location: PtiWiki.php?op=admin');
+        }
         echo mainTPL("Admin", adminTPL(bannerTPL("Admin"), list_users(), list_actions()), $navlinks);
         // Voir le log & modifier des users
         break;
     case 'unauthorized':
         echo mainTPL("Erreur", errorTPL("Vous devez d'abord vous connecter"), $navlinks);
     break;
+    case 'banned':
+        echo mainTPL("Erreur", bannedTPL("Il semble que vous avez été banis, meilleure chance la prochaine fois !"), $navlinks);
+        break;
     default:
         echo mainTPL("Erreur", errorTPL("Page introuvable"), $navlinks);
         break;

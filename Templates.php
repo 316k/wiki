@@ -105,10 +105,16 @@ function adminTPL($banner, $users, $logs) {
 HTML;
 
     foreach($users as $user) {
+        $ban_word = $user['rank'] == 'banned' ? 'Débannir' : 'Bannir';
+        $ban_value =  $user['rank'] == 'banned' ? 'user' : 'banned';
         $out .= '<tr><th>' . $user['name'] . '</th>';
         $out .= '<td>' . $user['rank'] . '</td>';
         $out .= '<td style="text-align: right">' . user_contribution($user['id']) . '%</td>';
-        $out .= '<td><a href="">Bannir</a></td></tr>';
+        if ($user['rank'] != 'admin'){
+            $out .= '<td><a href="PtiWiki.php?op=admin&rank=' . $ban_value . '&user=' . $user['name'] . '">' . $ban_word . '</a></td></tr>';
+        } else {
+            $out .= '<td></td></tr>';
+        }
     }
 
     $out .= <<<HTML
@@ -143,6 +149,13 @@ function errorTPL($error){
     return <<<HTML
     <h1>Erreur: $error</h1>
     <p>Vous pouvez toujours essayer de retourner à l'<a href="PtiWiki.php?op=read&amp;file=PageAccueil">Accueil</a> ou de vous <a href="PtiWiki.php?op=login">logguer</a>.</p>
+HTML;
+}
+
+function bannedTPL($message) {
+    return <<<HTML
+    <h1>Oh non !</h1>
+    <p>$message</p>
 HTML;
 }
 
@@ -188,6 +201,10 @@ function editLinkTPL($file,$name){
 
 function deleteLinkTPL($file,$name){
     return "<a href='PtiWiki.php?op=delete&amp;file=$file'>$name</a>";
+}
+
+function viewSourceLinkTPL($file,$name){
+    return "<a href='PtiWiki.php?op=view_source&amp;file=$file'>$name</a>";
 }
 
 function deleteTPL($pageURL){
