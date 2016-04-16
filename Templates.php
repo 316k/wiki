@@ -50,22 +50,36 @@ WRITE;
 function loginTPL($banner) {
     return <<<WRITE
     $banner
-    <form method="POST" action="">
-        <input type="text" name="name" placeholder="user" />
-        <input type="password" name="password" placeholder="password" />
-        <input type="submit" value="Login"></input>
-    </form>
+    <div class="formdiv">
+        <h1 class="login_title">Veuillez entrez vos information pour vous connecter</h1>
+        <form method="POST" action="">
+            <label for="username">Nom d'utilisateur:</label>
+            <input type="text" id="username" name="name" placeholder="user" />
+            <br/>
+            <label for="password">Mot de passe:</label>
+            <input type="password" id="password" name="password" placeholder="password" />
+            <br/>
+            <input type="submit" value="Login"></input>
+        </form>
+    </div>
 WRITE;
 }
 
 function signupTPL($banner) {
     return <<<WRITE
     $banner
-    <form method="POST" action="">
-        <input type="text" name="name" placeholder="user" />
-        <input type="password" name="password" placeholder="password" />
-        <input type="submit" value="Login"></input>
-    </form>
+    <div class="formdiv">
+        <h1 class="login_title">Veuillez entrez un nom d'utilisateur et un mot de passe pour vous enregistrer</h1>
+        <form method="POST" action="">
+            <label for="name">Nom d'utilisateur:</label>
+            <input type="text" id="name" name="name" placeholder="user" />
+            <br/>
+            <label for="pass">Mot de passe:</label>
+            <input type="password" id="pass" name="password" placeholder="password" />
+            <br/>
+            <input type="submit" value="Login"></input>
+        </form>
+    </div>
 WRITE;
 }
 

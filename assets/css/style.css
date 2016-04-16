@@ -30,6 +30,14 @@ textarea {
     height:400px;
 }
 
+.formdiv {
+    width: 35%;
+    margin: 0px auto;
+}
+.login_title {
+    font-size: 1.3em;
+}
+
 .navlinks {
     display: inline-block;
     float: left;
