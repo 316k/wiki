@@ -25,6 +25,11 @@ td, th {
     padding: 10px;
 }
 
+textarea {
+    width:60%;
+    height:400px;
+}
+
 .navlinks {
     display: inline-block;
     float: left;

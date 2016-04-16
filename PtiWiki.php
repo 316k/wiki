@@ -78,7 +78,7 @@ switch ($op) {
                     $navlinks);
         break;
     case 'view_source':
-        echo mainTPL($title, viewTPL(bannerTPL($title), $page->getText()), $navlinks);
+        echo mainTPL($title, viewTPL(bannerTPL($title),'<textarea readonly>' . $page->getText() . '</textarea>'), $navlinks);
         break;
     case 'update':
         echo mainTPL($title, editTPL(bannerTPL($title),
