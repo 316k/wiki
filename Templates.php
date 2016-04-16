@@ -117,7 +117,7 @@ HTML;
             $out .= '<a href="PtiWiki.php?op=admin&rank=' . $ban_value . '&user=' . $user['name'] . '">' . $ban_word . '</a> ';
         }
         if($user != logged_in() && $user['rank'] != "banned") {
-            $out .= '<a href="PtiWiki.php?op=admin&rank=' . $admin_value . '&user=' . $user['name'] . '">' . $admin_word . '</a></td></tr>';
+            $out .= '<a href="PtiWiki.php?op=admin&rank=' . $admin_value . '&user=' . $user['name'] . '">' . $admin_word . '</a>';
         }
 
         $out .= '</td></tr>';
