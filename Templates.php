@@ -53,12 +53,12 @@ function loginTPL($banner) {
     <div class="formdiv">
         <h1 class="login_title">Veuillez entrez vos information pour vous connecter</h1>
         <form method="post" action="">
-            <label for="username">Nom d'utilisateur:</label>
-            <input type="text" id="username" name="name" placeholder="user" />
-            <br/>
-            <label for="password">Mot de passe:</label>
-            <input type="password" id="password" name="password" placeholder="password" />
-            <br/>
+            
+            <p><label for="username">Nom d'utilisateur:</label></p>
+            <input type="text" id="username" name="name"/>
+            <p><label for="password">Mot de passe:</label></p>
+            <input type="password" id="password" name="password"/>
+            <p></p>
             <input type="submit" value="Login"></input>
         </form>
     </div>
@@ -71,12 +71,11 @@ function signupTPL($banner) {
     <div class="formdiv">
         <h1 class="login_title">Veuillez entrez un nom d'utilisateur et un mot de passe pour vous enregistrer</h1>
         <form method="post" action="">
-            <label for="name">Nom d'utilisateur:</label>
-            <input type="text" id="name" name="name" placeholder="user" />
-            <br/>
-            <label for="pass">Mot de passe:</label>
-            <input type="password" id="pass" name="password" placeholder="password" />
-            <br/>
+            <p><label for="name">Nom d'utilisateur:</label></p>
+            <input type="text" id="name" name="name"/>
+            <p><label for="pass">Mot de passe:</label></p>
+            <input type="password" id="pass" name="password"/>
+            <p></p>
             <input type="submit" value="Login"></input>
         </form>
     </div>
