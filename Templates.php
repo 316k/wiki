@@ -107,14 +107,20 @@ HTML;
     foreach($users as $user) {
         $ban_word = $user['rank'] == 'banned' ? 'Débannir' : 'Bannir';
         $ban_value =  $user['rank'] == 'banned' ? 'user' : 'banned';
+        $admin_word = $user['rank'] == 'admin' ? 'Enlever les pouvoirs de modérations' : 'Donner les pouvoirs de modération';
+        $admin_value = $user['rank'] == 'admin' ? 'user' : 'admin';
         $out .= '<tr><th>' . $user['name'] . '</th>';
         $out .= '<td>' . $user['rank'] . '</td>';
         $out .= '<td style="text-align: right">' . user_contribution($user['id']) . '%</td>';
+        $out .= '<td>';
         if ($user['rank'] != 'admin'){
-            $out .= '<td><a href="PtiWiki.php?op=admin&rank=' . $ban_value . '&user=' . $user['name'] . '">' . $ban_word . '</a></td></tr>';
-        } else {
-            $out .= '<td></td></tr>';
+            $out .= '<a href="PtiWiki.php?op=admin&rank=' . $ban_value . '&user=' . $user['name'] . '">' . $ban_word . '</a> ';
         }
+        if($user != logged_in() && $user['rank'] != "banned") {
+            $out .= '<a href="PtiWiki.php?op=admin&rank=' . $admin_value . '&user=' . $user['name'] . '">' . $admin_word . '</a></td></tr>';
+        }
+
+        $out .= '</td></tr>';
     }
 
     $out .= <<<HTML
