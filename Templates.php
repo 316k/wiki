@@ -114,10 +114,10 @@ HTML;
         $out .= '<td style="text-align: right">' . user_contribution($user['id']) . '%</td>';
         $out .= '<td>';
         if ($user['rank'] != 'admin'){
-            $out .= '<a href="PtiWiki.php?op=admin&rank=' . $ban_value . '&user=' . $user['name'] . '">' . $ban_word . '</a> ';
+            $out .= '<a href="PtiWiki.php?op=admin&amp;rank&#61;' . $ban_value . '&user=' . $user['name'] . '">' . $ban_word . '</a> ';
         }
         if($user != logged_in() && $user['rank'] != "banned") {
-            $out .= '<a href="PtiWiki.php?op=admin&rank=' . $admin_value . '&user=' . $user['name'] . '">' . $admin_word . '</a>';
+            $out .= '<a href="PtiWiki.php?op=admin&amp;rank&#61;' . $admin_value . '&user=' . $user['name'] . '">' . $admin_word . '</a>';
         }
 
         $out .= '</td></tr>';
