@@ -52,7 +52,7 @@ function loginTPL($banner) {
     $banner
     <div class="formdiv">
         <h1 class="login_title">Veuillez entrez vos information pour vous connecter</h1>
-        <form method="POST" action="">
+        <form method="post" action="">
             <label for="username">Nom d'utilisateur:</label>
             <input type="text" id="username" name="name" placeholder="user" />
             <br/>
@@ -70,7 +70,7 @@ function signupTPL($banner) {
     $banner
     <div class="formdiv">
         <h1 class="login_title">Veuillez entrez un nom d'utilisateur et un mot de passe pour vous enregistrer</h1>
-        <form method="POST" action="">
+        <form method="post" action="">
             <label for="name">Nom d'utilisateur:</label>
             <input type="text" id="name" name="name" placeholder="user" />
             <br/>
