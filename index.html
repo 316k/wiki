@@ -20,13 +20,14 @@
 	    <li><a href="Wiki.php">Gestion de la DB</a></li>
     </ul>
     
-    <p>Durant ce projet, nous avons pu en apprendre beaucoup sur la façon de gérer un site comprenant des usagers et des administrateurs. Nous avons aussi appris à utiliser php qui s'est révélé assez puissant à cause de ses nombreuses fonctions préintégrées mais qui nous a aussi nuit par moment à cause de sa gestion très laxiste des erreurs.
+    <p>Durant ce projet, nous avons pu en apprendre beaucoup sur la façon de gérer un site comprenant des usagers et des administrateurs. Nous avons aussi appris à utiliser php qui s'est révélé assez puissant à cause de ses nombreuses fonctions préintégrées mais qui nous a aussi nuit par moment à cause de sa gestion très laxiste des erreurs et de l'affichage parfois difficile de code de débug.
     </p>
-    <p>Durant l'élaboration du projet, nous nous sommes d'abord concentré sur l'ajout d'une base de donné permettant d'enregistrer des utilisateurs ayant des champs tels que noms d'utilisateurs, mots de passes et niveaux de permissions. Ainsi, seul un utilisateur a le droit de modifier une page de wiki. Le champ "rank" de notre table d'utilisateur nous permet d'implanter des utilisateurs administrateurs qui peuvent voir l'historique des modifications des pages par les usagers.</p>
+    <p>Durant l'élaboration du projet, nous nous sommes d'abord concentré sur l'ajout d'une base de donné permettant d'enregistrer des utilisateurs ayant des champs tels que noms d'utilisateurs, mots de passes et niveaux de permissions. Ainsi, seul un utilisateur a le droit de modifier ou de créer une page de wiki. Le champ "rank" de notre table d'utilisateur nous permet d'implanter des utilisateurs administrateurs qui peuvent voir l'historique des modifications des pages par les usagers et gérer les permissions. Ainsi, un administrateur peut donner et enlever les pouvoir d'administration à un autre usager mais aussi bannir un utilisateur qui aurait eu des comportements répréhensibles. Un utilisateur banni ne peut plus contribuer au wiki mais peut toujours en consulter les pages.</p>
     <p>
+    Nous n'avons pas beaucoup changé le style fournis avec le code puisque nous le trouvions minimaliste et plutot adéquat pour un petit wiki.
     Cette simplicité au niveau du style nous permet de rester compatible avec les appareils mobiles tels que les téléphones intelligents.
     </p>
-    <p>Nous avons pris la liberté de remplacer le parseur de markdown fourni par le parseur libre Parsedown en raison de la propension à compiler "########################AAAAA" en "&lth24&gtAAAAA&lt/h24&gt" et à générer du html invalide (comme par exemple en mettant des titres dans des balises p). Nous avons par contre gardés le support pour les WikiWords qui sont une partie importante des fonctionalités du wiki.</p>
+    <p>Nous avons pris la liberté de remplacer le parseur de markdown fourni par le parseur libre Parsedown en raison de la propension à compiler "########################AAAAA" en "&lth24&gtAAAAA&lt/h24&gt" et à générer du html invalide (comme par exemple en mettant des titres dans des balises p). Nous avons par contre gardés le support pour les WikiWords qui sont une partie importante des fonctionalités du wiki. Nous avons également ajoutés une fonctionalité de visionnement de source qui permet à un usager de voir le code d'une page.</p>
 
 </body>
 </html>
